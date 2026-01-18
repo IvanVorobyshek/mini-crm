@@ -13,3 +13,6 @@ Realization steps
 
 5. Seeders (Roles, User, Customer, Ticket). User Factory has been updated. Enums for UserRole and TicketStatus
 Execute command to populate DB with data (roles, users, customers, tickets) - ./vendor/bin/sail artisan migrate:fresh --seed
+
+6. Repositories (Interfaces, TicketRepositiry, CustomerRepository)
+Only required methods

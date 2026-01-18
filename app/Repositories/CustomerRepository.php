@@ -17,14 +17,8 @@ class CustomerRepository implements CustomerRepositoryInterface
         return Customer::where('email', $email)->first();
     }
 
-    public function hasRecentTicket(string $phone, int $hours = 24): bool
+    public function hasRecentTicket(Customer $customer, int $hours = 24): bool
     {
-        $customer = $this->findByPhone($phone);
-
-        if (!$customer) {
-            return false;
-        }
-
         return $customer->tickets()->where('created_at', '>=', now()->subHours($hours))->exists();
     }
 }

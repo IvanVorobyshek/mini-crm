@@ -16,3 +16,7 @@ Execute command to populate DB with data (roles, users, customers, tickets) - ./
 
 6. Repositories (Interfaces, TicketRepositiry, CustomerRepository)
 Only required methods
+
+7. Services, Exceptions
+StatisticService methods should be added
+

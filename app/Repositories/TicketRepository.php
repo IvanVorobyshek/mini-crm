@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use App\Repositories\Contracts\TicketRepositoryInterface;
 use DateTime;
@@ -24,7 +25,7 @@ class TicketRepository implements TicketRepositoryInterface
         return Ticket::with('customer')->get();
     }
 
-    public function updateStatus(Ticket $ticket, string $status): bool
+    public function updateStatus(Ticket $ticket, TicketStatus $status): bool
     {
         return $ticket->update(['status' => $status]);
     }
@@ -39,7 +40,7 @@ class TicketRepository implements TicketRepositoryInterface
         return Ticket::with('customer')->whereBetween('created_at', [$startDate, $endDate])->get();
     }
 
-    public function countByStatus(string $status): int
+    public function countByStatus(TicketStatus $status): int
     {
         return Ticket::where('status', $status)->count();
     }

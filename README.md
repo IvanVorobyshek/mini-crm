@@ -20,3 +20,7 @@ Only required methods
 7. Services, Exceptions
 StatisticService methods should be added
 
+8. FormRequests 
+ - CreateTicketRequest - public request
+ - FilterTicketRequest - admin, manager
+ - UpdateTicketStatusRequest - admin, manager

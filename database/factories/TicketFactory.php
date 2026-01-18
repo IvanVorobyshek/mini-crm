@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TicketStatus;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,7 +17,7 @@ class TicketFactory extends Factory
             'customer_id' => Customer::factory(),
             'subject' => fake()->sentence(),
             'description' => fake()->paragraph(),
-            'status' => 'new',
+            'status' => TicketStatus::NEW,
             'manager_responded_at' => null,
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TicketStatus;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,7 @@ class Ticket extends Model
     protected function casts(): array
     {
         return [
+            'status' => TicketStatus::class,
             'manager_responded_at' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

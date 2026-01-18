@@ -8,3 +8,7 @@ Realization steps
 2. Database migrations
 
 3. Eloquent Models (User, Customer, Ticket)
+
+4. Factories (User, Customer, Ticket)
+
+5. 

@@ -24,3 +24,5 @@ StatisticService methods should be added
  - CreateTicketRequest - public request
  - FilterTicketRequest - admin, manager
  - UpdateTicketStatusRequest - admin, manager
+
+9. API Resources (Ticket, TicketCollection, Statistics)

@@ -27,8 +27,13 @@ StatisticService methods should be added
 
 9. API Resources (Ticket, TicketCollection, Statistics)
 
-10. API COntrollers (store ticket, update ticket status, statistics)
+10. API Controllers (store ticket, update ticket status, statistics)
  - API routes 
  - fix for Exception folder
  - Sanctum module (but api routes without auth)
+
+11. Widget
+ - Controller
+ - Blade
+ - Vite (styles, js)
 

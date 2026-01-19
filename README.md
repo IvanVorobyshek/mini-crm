@@ -26,3 +26,9 @@ StatisticService methods should be added
  - UpdateTicketStatusRequest - admin, manager
 
 9. API Resources (Ticket, TicketCollection, Statistics)
+
+10. API COntrollers (store ticket, update ticket status, statistics)
+ - API routes 
+ - fix for Exception folder
+ - Sanctum module (but api routes without auth)
+

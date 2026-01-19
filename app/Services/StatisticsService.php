@@ -12,16 +12,25 @@ class StatisticsService
 
     public function getDailyStatistics(): array
     {
-        return [];
+        return [
+            'total' => 0,
+            'period' => 'day',
+        ];
     }
 
     public function getWeeklyStatistics(): array
     {
-        return [];
+        return [
+            'total' => 0,
+            'period' => 'week',
+        ];
     }
 
     public function getMonthlyStatistics(): array
     {
-        return [];
+        return [
+            'total' => 0,
+            'period' => 'month',
+        ];
     }
 }

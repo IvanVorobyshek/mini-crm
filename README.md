@@ -1,46 +1,150 @@
-Mini-CRM
+# Mini-CRM System
 
-Realization steps
+Система для сбора и обработки заявок с сайта через универсальный виджет.
 
-1. Project Initialization
- - Laravel 12, PHP 8.4, PostgreSQL, MailPit, Redis, xDebug, Laravel debugbar, spatie
+## Технології
 
-2. Database migrations
+- **Laravel 12**
+- **PHP 8.4**
+- **PostgreSQL 18**
+- **Redis**
+- **Docker & Docker Compose**
+- **Spatie Laravel Permission**
+- **Spatie Laravel Media Library**
 
-3. Eloquent Models (User, Customer, Ticket)
+## Требования
 
-4. Factories (User, Customer, Ticket)
+- Docker & Docker Compose
+- Git
 
-5. Seeders (Roles, User, Customer, Ticket). User Factory has been updated. Enums for UserRole and TicketStatus
-Execute command to populate DB with data (roles, users, customers, tickets) - ./vendor/bin/sail artisan migrate:fresh --seed
+## Быстрый старт
 
-6. Repositories (Interfaces, TicketRepositiry, CustomerRepository)
-Only required methods
+### 1. Клонирование репозитория
 
-7. Services, Exceptions
-StatisticService methods should be added
+git clone git@github.com:IvanVorobyshek/mini-crm.git
+cd crm
 
-8. FormRequests 
- - CreateTicketRequest - public request
- - FilterTicketRequest - admin, manager
- - UpdateTicketStatusRequest - admin, manager
+### 2. Настройка среды
 
-9. API Resources (Ticket, TicketCollection, Statistics)
+# Скопировать .env.example в .env
+cp .env.example .env
 
-10. API Controllers (store ticket, update ticket status, statistics)
- - API routes 
- - fix for Exception folder
- - Sanctum module (but api routes without auth)
+# Настроить переменные среды
+# DB_DATABASE, DB_USERNAME, DB_PASSWORD
 
-11. Widget
- - Controller
- - Blade
- - Vite (styles, js)
+### 3. Запуск
 
-12. Admin Panel
- - Middleware
- - AdminController
- - AdminPanel (login, tickets pages)
- - Statistics
+# Запустити контейнери
+./vendor/bin/sail up -d
 
+# Установить зависимости
+./vendor/bin/sail composer install
 
+# Создать симлинк для storage
+./vendor/bin/sail artisan storage:link
+
+# Сгенерировать ключ
+./vendor/bin/sail artisan key:generate
+
+# Запустить миграции и seeders (создает 1 админ, 5 менеджеров)
+./vendor/bin/sail artisan migrate:fresh --seed
+
+# Установить npm зависимости и собрать assets
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build
+
+### 4. Вход в приложение
+Веб: http://localhost
+MailPit: http://localhost:8025
+PostgreSQL: localhost:5432
+Redis: localhost:6379
+
+### 5. Тестовые данные
+Пользователи
+
+Администратор
+Email: admin@example.com
+Password: password
+Роль: admin
+
+Менеджер
+Email: manager@example.com
+Password: password
+Роль: manager
+
+### 6. Виджет
+Доступен по адресу http://localhost/widget
+
+Вставка через iframe:
+<iframe 
+    src="http://your-domain.com/widget" 
+    width="100%" 
+    height="700" 
+    frameborder="0"
+    style="border: none;">
+</iframe>
+
+### 7. Админ-панель
+http://localhost/admin
+
+Предварительно следует войти (http://localhost/login) с тестовыми данными, указанными выше.
+Cтраницы:
+Dashboard - статистика заявок
+Tickets - список заявок с фильтрацией
+
+### 8. API
+
+Создать заявку
+POST /api/tickets
+{
+    "phone": "+380501234567",
+    "subject": "Питання про продукт",
+    "description": "Детальний опис питання...",
+    "files": []
+}
+*** Важно!
+Номер телефона можно взять из БД в таблице customers, поле phone (при выполнении ./vendor/bin/sail artisan migrate:fresh --seed создаются 20 customers). Заявки от несуществующих customers приниматься не будут
+
+Response
+{
+    "data": {
+        "id": 26,
+        "subject": "subj",
+        "description": "Ticket description",
+        "status": "new",
+        "files": []
+    }
+}
+
+Получить статистику заявок
+GET /api/tickets/statistics?period={day|week|month}
+
+# Статистика за день
+curl http://localhost/api/tickets/statistics?period=day
+
+# Статистика за неделю
+curl http://localhost/api/tickets/statistics?period=week
+
+# Статистика за месяц
+curl http://localhost/api/tickets/statistics?period=month
+
+Пример
+http://localhost/api/tickets/statistics?period=month
+
+Response
+{
+    "data": {
+        "total": 26,
+        "by_status": {
+            "new": 23,
+            "processing": 2,
+            "completed": 1
+        },
+        "period": {
+            "start": "2026-01-01 00:00:00",
+            "end": "2026-01-31 23:59:59"
+        }
+    }
+}
+
+Ограничение: одна заявка от одного номера телефона за 24 часа

@@ -22,7 +22,7 @@
 ### 1. Клонирование репозитория
 
 git clone git@github.com:IvanVorobyshek/mini-crm.git
-cd crm
+cd mini-crm
 
 ### 2. Настройка среды
 
@@ -35,10 +35,11 @@ cp .env.example .env
 ### 3. Запуск
 
 # Запустить контейнеры
-./vendor/bin/sail up -d
+docker compose up -d
+docker compose exec laravel.test composer install
+docker compose stop
 
-# Установить зависимости
-./vendor/bin/sail composer install
+./vendor/bin/sail up -d
 
 # Создать симлинк для storage
 ./vendor/bin/sail artisan storage:link

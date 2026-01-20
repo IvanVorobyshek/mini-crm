@@ -32,7 +32,33 @@ class TicketRepository implements TicketRepositoryInterface
 
     public function getFiltered(array $filters): Collection
     {
-        return Ticket::with('customer')->where($filters)->get();
+        $query = Ticket::with('customer');
+
+        if (!empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        if (!empty($filters['email'])) {
+            $query->whereHas('customer', function($q) use ($filters) {
+                $q->where('email', $filters['email']);
+            });
+        }
+
+        if (!empty($filters['phone'])) {
+            $query->whereHas('customer', function($q) use ($filters) {
+                $q->where('phone', $filters['phone']);
+            });
+        }
+
+        if (!empty($filters['date_from'])) {
+            $query->whereDate('created_at', '>=', $filters['date_from']);
+        }
+
+        if (!empty($filters['date_to'])) {
+            $query->whereDate('created_at', '<=', $filters['date_to']);
+        }
+
+        return $query->orderBy('created_at', 'desc')->get();
     }
 
     public function getByDateRange(DateTime $startDate, DateTime $endDate): Collection

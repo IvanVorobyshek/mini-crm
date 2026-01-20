@@ -10,8 +10,7 @@ class UpdateTicketStatusRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
-        return $this->user()->hasRole(['admin', 'manager']);
+        return $this->user()->hasRole('manager');
     }
 
     public function rules(): array

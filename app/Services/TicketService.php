@@ -57,10 +57,20 @@ class TicketService
 
         $result = $this->ticketRepository->updateStatus($ticket, $status);
 
-        if ($result && in_array($status, ['in_progress', 'completed'])) {
+        if ($result && $status === TicketStatus::COMPLETED) {
             $ticket->update(['manager_responded_at' => now()]);
         }
 
         return $result;
+    }
+
+    public function find(int $id): ?Ticket
+    {
+        return $this->ticketRepository->find($id);
+    }
+
+    public function getFilteredTickets(array $filters): Collection
+    {
+        return $this->ticketRepository->getFiltered($filters);
     }
 }

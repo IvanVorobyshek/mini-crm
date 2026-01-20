@@ -37,3 +37,10 @@ StatisticService methods should be added
  - Blade
  - Vite (styles, js)
 
+12. Admin Panel
+ - Middleware
+ - AdminController
+ - AdminPanel (login, tickets pages)
+ - Statistics
+
+

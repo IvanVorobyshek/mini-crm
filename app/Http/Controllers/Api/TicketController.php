@@ -45,7 +45,7 @@ class TicketController extends Controller
             }
 
             return response()->json(['message' => 'Status updated successfully']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'message' => 'Failed to update status',
                 'error' => $e->getMessage(),
